@@ -1,5 +1,5 @@
 {
-  "name": "hypixel-api-v2",
+  "name": "@Caleb-Tan/hypixel-api-v2",
   "version": "1.2.23",
   "description": "",
   "main": "./src/index.js",

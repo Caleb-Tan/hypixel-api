@@ -667,7 +667,11 @@ class HypixelAPI {
 		const { data } = await this.manager.request('/resources/skyblock/skills', { key: null });
 
 		// https://github.com/HypixelDev/PublicAPI/issues/417
-		return data.skills ?? data.collections;
+		if (data.skills == null) {
+			return data.collections;
+		} else {
+			return data.skills;
+		}
 	}
 
 	get skyblock() {
