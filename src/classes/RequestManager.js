@@ -23,7 +23,7 @@ class RequestManager {
 		this.axios = axios.create({
 			validateStatus: this.noop,
 			adapter: async config => {
-        const key = `${config.baseURL ?? ''}${config.url}${JSON.stringify(config.params ?? {})}`;
+        const key = `${config.baseURL == null ? '' : config.baseURL}${config.url}${JSON.stringify(config.params == null ? {} : config.params)}`;
 
         if (config.force !== true) {
           const cache = this.cache.get(key);
@@ -37,7 +37,7 @@ class RequestManager {
         if (waiting) {
           return waiting;
         } else {
-          this.waiting.set(key, axios.default.get(`${config.baseURL ?? ''}${config.url}`, {
+          this.waiting.set(key, axios.default.get(`${config.baseURL == null ? '' : config.baseURL}${config.url}`, {
             params: config.params,
             headers: config.headers,
             validateStatus: this.noop
@@ -123,7 +123,7 @@ class RequestManager {
 
     if (response.data.success === false) {
       if (response.headers['retry-after'] || response.status === 429) {
-        await Util.sleep((response.headers['retry-after'] ?? 60) * 1000 + 1000);
+        await Util.sleep((response.headers['retry-after'] == null ? 60 : response.headers['retry-after']) * 1000 + 1000);
 
         params.key = key;
 
